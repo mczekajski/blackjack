@@ -1,0 +1,26 @@
+@import "bootstrap.min.css";
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@700&family=Poppins:wght@300&display=swap');
+
+body {
+    min-height: 100vh;
+    background: linear-gradient(to bottom, #1A4A1C, #1e5320 600px);
+    font-family: 'Poppins', sans-serif;
+}
+
+h1 {
+    font-family: 'Cormorant Garamond', serif;
+    color: #fff;
+    letter-spacing: 2px;
+}
+
+.container--main {
+    height: 100vh;
+    transform: translateY(-10%);
+}
+
+.window {
+    background-color: rgba(0, 0, 0, .5);
+    height: 350px;
+    border-radius: 10px;
+}

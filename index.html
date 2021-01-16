@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/style.css" />
+  </head>
+  <body>
+    <div
+      class="container d-flex flex-column justify-content-center align-item-center container--main"
+    >
+      <div class="row">
+        <div class="col-12 mt-4 text-center">
+          <h1 class="text-uppercase display-4">BlackJack</h1>
+        </div>
+      </div>
+      <div class="row">
+        <div
+          class="col-8 offset-2 mt-4 p-4 d-flex flex-column justify-content-center window"
+        >
+          <div class="d-flex flex-column menu">
+            <button
+              class="btn btn-success p-4 m-2 text-uppercase"
+              id="btnNewGame"
+            >
+              Start new game
+            </button>
+            <button
+              class="btn btn-dark p-4 m-2 text-uppercase"
+              id="btnLoadGame"
+            >
+              Load last game
+            </button>
+            <button
+              class="btn btn-secondary p-4 m-2 text-uppercase"
+              id="btnTopScore"
+            >
+              Show Top score
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="js/index.js" type="module"></script>
+  </body>
+</html>
