@@ -4,8 +4,9 @@
 
 body {
     min-height: 100vh;
-    background: linear-gradient(to bottom, #1A4A1C, #1e5320 600px);
+    background: linear-gradient(to bottom, #123514, #1c4e1e);
     font-family: 'Poppins', sans-serif;
+    color: #fff;
 }
 
 h1 {
@@ -14,11 +15,16 @@ h1 {
     letter-spacing: 2px;
 }
 
+hr {
+    width: 100%;
+    border-color: #fff;
+}
+
 .container--main {
     height: 100vh;
 }
 
 .window {
-    background-color: rgba(0, 0, 0, .5);
+    background-color: rgba(0, 0, 0, .4);
     border-radius: 10px;
 }

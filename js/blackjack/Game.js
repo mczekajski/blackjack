@@ -1,43 +1,54 @@
+import { Deck } from "./Deck.js";
+import { Player } from "./Player.js";
+import { Screen } from "./Screen.js";
+
 export class Game {
-    GAME_STATE = {
-        MENU: 0,
-        RUNNING: 1,
-        TOPSCORE: 2
-    }
+  constructor(
+    windowDiv,
+    menuDiv,
+    gameDiv,
+    btnHit,
+    btnStand,
+    btnDoubleDown,
+    btnSave,
+    btnLoad,
+    dealersCardsDiv,
+    playersCardsDiv,
+    initialBalance
+  ) {
+    this.windowDiv = windowDiv;
+    this.menuDiv = menuDiv;
+    this.gameDiv = gameDiv;
 
-    constructor(windowDiv, menuDiv, gameDiv) {
-        this.windowDiv = windowDiv;
-        this.menuDiv = menuDiv;
-        this.gameDiv = gameDiv;
-        this.gamestate = this.GAME_STATE.RUNNING;
-        this.balance = 1000;
+    this.btnHit = btnHit;
+    this.btnStand = btnStand;
+    this.btnDoubleDown = btnDoubleDown;
+    this.btnSave = btnSave;
+    this.btnLoad = btnLoad;
+    this.dealersCardsDiv = dealersCardsDiv;
+    this.playersCardsDiv = playersCardsDiv;
 
-        console.log("New game starts!");
-        this.hideElement(menuDiv);
-        this.setFullWindow();
-    }
+    this.round = 1;
+    this.bet = 0;
 
-    startGame() {
-        this.hideElement(menuDiv);
-        this.setFullWindow();
-    }
+    this.screen = new Screen();
+    this.player = new Player("player", initialBalance);
+    this.dealer = new Player("dealer");
 
-    setFullWindow() {
-        this.windowDiv.classList.remove('col-8');
-        this.windowDiv.classList.remove('offset-2');
-        this.windowDiv.classList.add('col-12');
-        this.windowDiv.style.height = "80vh";
-    }
+    this.deck = new Deck(this);
+    this.startGame(this.screen, this.deck);
+  }
 
-    hideElement(element) {
-        console.log("hiding");
-        element.classList.remove('d-flex');
-        element.classList.add('d-none');
-    } 
+  startGame(screen, deck) {
+    screen.hideElement(menuDiv);
+    screen.setGameWindowFull(this.windowDiv);
+    screen.showElement(this.gameDiv);
+  }
 
-    showElement(element) {
-        console.log("showing");
-        element.classList.remove('d-none');
-        element.classList.add('d-flex');
-    }
+  startRound() {
+    this.player.hand.length = 0;
+    this.dealer.hand.length = 0;
+    this.deck.drawCards(2, this.player);
+    this.deck.drawCards(2, this.dealer);
+  }
 }
