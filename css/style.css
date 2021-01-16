@@ -20,6 +20,10 @@ hr {
     border-color: #fff;
 }
 
+.btn:focus {
+    box-shadow: none;
+  }
+
 .container--main {
     height: 100vh;
 }

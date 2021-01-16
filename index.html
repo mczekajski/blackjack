@@ -45,8 +45,17 @@
           <!-- GAME DIV -->
           <div class="d-none flex-column h-100" id="gameDiv">
             <div class="row">
-              <div class="col-12">
-                <h2 class="h5 ml-4 mb-4">Dealer's cards:</h2>
+              <div class="col-6">
+                <h2 class="h5 mb-4">Dealer's cards (total value <span id="dealersCardsTotalValueSpan"></span>):</h2>
+              </div>
+              <div class="col-2 d-flex justify-content-end">
+                <h2 class="h5 mb-4">Balance: $<span id="balanceSpan">900</span></h2>
+              </div>
+              <div class="col-2 d-flex justify-content-end">
+                <h2 class="h5 mb-4">Bet: $<span id="betSpan">100</span></h2>
+              </div>
+              <div class="col-2 d-flex justify-content-end">
+                <h2 class="h5 mb-4">Round: <span id="roundSpan"></span>/5</h2>
               </div>
             </div>
 
@@ -59,7 +68,7 @@
 
             <div class="row">
               <div class="col-12">
-                <h2 class="h5 ml-4 mb-4 mt-4">Your cards:</h2>
+                <h2 class="h5 mb-4 mt-4">Your cards (total value <span id="playersCardsTotalValueSpan"></span>):</h2>
               </div>
             </div>
 
@@ -75,7 +84,7 @@
             <div class="row no-gutters">
               <div class="col-2 d-flex justify-content-center">
                 <button
-                  class="btn btn-success px-4 m-1 w-100 text-uppercase"
+                  class="btn btn-success m-1 w-100 text-uppercase"
                   id="btnHit"
                 >
                   hit
@@ -84,16 +93,16 @@
 
               <div class="col-2 d-flex justify-content-center">
                 <button
-                  class="btn btn-secondary px-4 m-1 w-100 text-uppercase"
-                  id="btnStand"
+                  class="btn btn-secondary m-1 w-100 text-uppercase"
+                  id="btnStay"
                 >
-                  stand
+                  stay
                 </button>
               </div>
 
               <div class="col-2 d-flex justify-content-center">
                 <button
-                  class="btn btn-danger px-4 m-1 w-100 text-uppercase"
+                  class="btn btn-danger m-1 w-100 text-uppercase"
                   id="btnDoubleDown"
                 >
                   double down
@@ -102,7 +111,7 @@
 
               <div class="col-2 offset-2 d-flex justify-content-center">
                 <button
-                  class="btn btn-dark px-4 m-1 w-100 text-uppercase"
+                  class="btn btn-dark m-1 w-100 text-uppercase"
                   id="btnSave"
                 >
                   save game
@@ -111,7 +120,7 @@
 
               <div class="col-2 d-flex justify-content-center">
                 <button
-                  class="btn btn-dark px-4 m-1 w-100 text-uppercase"
+                  class="btn btn-dark m-1 w-100 text-uppercase"
                   id="btnLoad"
                 >
                   load game

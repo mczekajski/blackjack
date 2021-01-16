@@ -4,4 +4,8 @@ export class Player {
         this.balance = balance;
         this.hand = [];
     }
+
+    countTotalCardsValue() {
+        console.log(this.hand);
+    }
 }

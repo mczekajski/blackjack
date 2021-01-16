@@ -17,7 +17,11 @@ export class Screen {
     element.classList.add("d-flex");
   }
 
-  showCard(game, player) {
+  updateValues(game, player, dealer) {
+      this.showCards(game, player);
+  }
+
+  showCards(game, player) {
     let div;
     if (player.name === "player") {
         div = game.playersCardsDiv;
@@ -25,6 +29,7 @@ export class Screen {
     if (player.name === "dealer") {
         div = game.dealersCardsDiv;
     }
+    div.innerHTML = "";
     player.hand.map(cardCode => {
         div.innerHTML += 
         `<div class="col-2">

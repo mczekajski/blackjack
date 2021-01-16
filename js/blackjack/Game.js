@@ -8,12 +8,13 @@ export class Game {
     menuDiv,
     gameDiv,
     btnHit,
-    btnStand,
+    btnStay,
     btnDoubleDown,
     btnSave,
     btnLoad,
     dealersCardsDiv,
     playersCardsDiv,
+    roundSpan,
     initialBalance
   ) {
     this.windowDiv = windowDiv;
@@ -21,12 +22,14 @@ export class Game {
     this.gameDiv = gameDiv;
 
     this.btnHit = btnHit;
-    this.btnStand = btnStand;
+    this.btnStay = btnStay;
     this.btnDoubleDown = btnDoubleDown;
     this.btnSave = btnSave;
     this.btnLoad = btnLoad;
     this.dealersCardsDiv = dealersCardsDiv;
     this.playersCardsDiv = playersCardsDiv;
+
+    this.roundSpan = roundSpan;
 
     this.round = 1;
     this.bet = 0;
@@ -36,19 +39,44 @@ export class Game {
     this.dealer = new Player("dealer");
 
     this.deck = new Deck(this);
-    this.startGame(this.screen, this.deck);
+    this.startGame(this.screen);
   }
 
-  startGame(screen, deck) {
+  startGame = async (screen) => {
     screen.hideElement(menuDiv);
     screen.setGameWindowFull(this.windowDiv);
     screen.showElement(this.gameDiv);
+    await this.deck.getNewDeckId();
+    await this.startRound();
+    this.addListeners();
   }
 
-  startRound() {
+  startRound = async () => {
     this.player.hand.length = 0;
     this.dealer.hand.length = 0;
-    this.deck.drawCards(2, this.player);
-    this.deck.drawCards(2, this.dealer);
+    this.roundSpan.textContent = this.round;
+    await this.deck.drawCards(2, this.dealer);
+    await this.deck.drawCards(2, this.player);
+    this.screen.showCards(this, this.dealer);
+    this.screen.showCards(this, this.player);
+  }
+
+  addListeners() {
+      this.btnHit.addEventListener('click', this.hit)
+      this.btnStay.addEventListener('click', this.stay)
+      this.btnDoubleDown.addEventListener('click', this.doubleDown)
+  }
+
+  hit = async () => {
+    await this.deck.drawCards(1, this.player);
+    this.screen.showCards(this, this.player);
+  }
+
+  stay() {
+    console.log('stay');
+  }
+
+  doubleDown() {
+    console.log(('ddown'));
   }
 }

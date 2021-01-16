@@ -5,7 +5,7 @@ const btnLoadGame = document.getElementById("btnLoadGame");
 const btnTopScore = document.getElementById("btnTopScore");
 
 const btnHit = document.getElementById("btnHit");
-const btnStand = document.getElementById("btnStand");
+const btnStay = document.getElementById("btnStay");
 const btnDoubleDown = document.getElementById("btnDoubleDown");
 const btnSave = document.getElementById("btnSave");
 const btnLoad = document.getElementById("btnLoad");
@@ -17,18 +17,21 @@ const menuDiv = document.getElementById("menuDiv");
 const dealersCardsDiv = document.getElementById("dealersCards");
 const playersCardsDiv = document.getElementById("playersCards");
 
+const roundSpan = document.getElementById("roundSpan");
+
 btnNewGame.addEventListener("click", () => {
   const game = new Game(
     windowDiv,
     menuDiv,
     gameDiv,
     btnHit,
-    btnStand,
+    btnStay,
     btnDoubleDown,
     btnSave,
     btnLoad,
     dealersCardsDiv,
     playersCardsDiv,
+    roundSpan,
     1000
   );
 });
