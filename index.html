@@ -17,28 +17,32 @@
       </div>
       <div class="row">
         <div
-          class="col-8 offset-2 mt-4 p-4 d-flex flex-column justify-content-center window"
+          class="col-8 offset-2 mt-4 px-4 py-5 d-flex flex-column justify-content-center window window--menu"
+          id="windowDiv"
         >
-          <div class="d-flex flex-column menu">
+          <div class="d-flex flex-column menu" id="menuDiv">
             <button
               class="btn btn-success p-4 m-2 text-uppercase"
               id="btnNewGame"
             >
-              Start new game
+              start new game
             </button>
             <button
               class="btn btn-dark p-4 m-2 text-uppercase"
               id="btnLoadGame"
             >
-              Load last game
+              load last game
             </button>
             <button
               class="btn btn-secondary p-4 m-2 text-uppercase"
               id="btnTopScore"
             >
-              Show Top score
+              show top score
             </button>
           </div>
+
+          <div class="d-none" id="gameDiv"></div>
+
         </div>
       </div>
     </div>

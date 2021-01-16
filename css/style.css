@@ -16,11 +16,9 @@ h1 {
 
 .container--main {
     height: 100vh;
-    transform: translateY(-10%);
 }
 
 .window {
     background-color: rgba(0, 0, 0, .5);
-    height: 350px;
     border-radius: 10px;
 }
