@@ -75,6 +75,8 @@ export class Game {
     this.dealer = new Player("dealer");
 
     this.deck = new Deck(this);
+    this.disableGameButtons();
+    this.screen.showElement(this.gameDiv);
     this.takeBet();
   }
 
@@ -109,7 +111,7 @@ export class Game {
   };
 
   takeBet = () => {
-    if (this.round === 5) {
+    if (this.round === 5 || this.balance < 5) {
       this.endGame();
       return;
     }
