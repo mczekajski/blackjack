@@ -26,6 +26,6 @@ export class Deck {
     await fetch(`https://deckofcardsapi.com/api/deck/${this.id}/shuffle/`)
       .then((res) => res.json())
       .then((data) => data.shuffled)
-      .catch(error => console.log(error));
+      .catch(() => this.shuffle());
   };
 }

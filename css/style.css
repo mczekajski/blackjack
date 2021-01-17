@@ -32,7 +32,7 @@ span {
     height: 100vh;
 }
 
-.roundResult {
+.window--msg {
     position: absolute;
     background-color: rgba(0, 0, 0, .6);
     width: 320px;
@@ -43,8 +43,9 @@ span {
     border-radius: 10px;
 }
 
-.window {
+.window--main {
     position: relative;
     background-color: rgba(0, 0, 0, .4);
     border-radius: 10px;
+    min-height: 400px;
 }

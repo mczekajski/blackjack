@@ -17,7 +17,7 @@
       </div>
       <div class="row">
         <div
-          class="col-8 offset-2 mt-4 px-4 py-5 d-flex flex-column justify-content-center window window--menu"
+          class="col-8 offset-2 mt-4 px-4 py-5 d-flex flex-column justify-content-center window--main"
           id="windowDiv"
         >
           <!-- MENU DIV -->
@@ -46,10 +46,15 @@
           <div class="d-none flex-column h-100" id="gameDiv">
             <div class="row">
               <div class="col-6">
-                <h2 class="h5 mb-4">Dealer's cards (total value: <span id="dealersCardsTotalValueSpan"></span>):</h2>
+                <h2 class="h5 mb-4">
+                  Dealer's cards (total value:
+                  <span id="dealersCardsTotalValueSpan"></span>):
+                </h2>
               </div>
               <div class="col-2 d-flex justify-content-end">
-                <h2 class="h5 mb-4">Balance: $<span id="balanceSpan"></span></h2>
+                <h2 class="h5 mb-4">
+                  Balance: $<span id="balanceSpan"></span>
+                </h2>
               </div>
               <div class="col-2 d-flex justify-content-end">
                 <h2 class="h5 mb-4">Bet: $<span id="betSpan"></span></h2>
@@ -60,24 +65,21 @@
             </div>
 
             <div class="row cards" id="dealersCards">
-
-                <!-- SPACE FOR CARDS -->
-
+              <!-- dealers cards go here -->
             </div>
-
 
             <div class="row">
               <div class="col-12">
-                <h2 class="h5 mb-4 mt-4">Your cards (total value: <span id="playersCardsTotalValueSpan"></span>):</h2>
+                <h2 class="h5 mb-4 mt-4">
+                  Your cards (total value:
+                  <span id="playersCardsTotalValueSpan"></span>):
+                </h2>
               </div>
             </div>
 
             <div class="row cards" id="playersCards">
-
-                <!-- SPACE FOR CARDS -->
-
+              <!-- players cards go here -->
             </div>
-
 
             <hr class="my-4" />
 
@@ -130,22 +132,57 @@
             </div>
           </div>
 
-
           <!-- ROUND RESULT DIV -->
-          <div id="roundResultDiv" class="d-none flex-column text-center roundResult">
-
+          <div
+            id="roundResultDiv"
+            class="d-none flex-column text-center window--msg"
+          >
             <h3 class="mb-4"><span id="roundResultSpan"></span></h3>
 
             <button
-            class="btn btn-success w-100 text-uppercase"
-            id="btnNextRound"
-          >
-            next round
-          </button>
-
+              class="btn btn-success w-100 text-uppercase"
+              id="btnNextRound"
+            >
+              next round
+            </button>
           </div>
 
+          <!-- END GAME DIV -->
+          <div
+            id="endGameDiv"
+            class="d-none flex-column text-center window--msg"
+          >
+            <h3 class="mb-2">Game ends</h3>
+            <p class="mb-4">
+              Your result is: $<span id="endGameBalanceSpan"></span>
+            </p>
 
+            <button
+              class="btn btn-success w-100 text-uppercase"
+              id="btnPlayAgain"
+            >
+              play again
+            </button>
+          </div>
+
+          <!-- BET INPUT DIV -->
+          <div
+            id="betInputDiv"
+            class="d-none flex-column text-center window--msg"
+          >
+            <h3 class="mb-2">Set your bet:</h3>
+            <input id="betInput" type="number" class="input" min=100 value=100 step="10" />
+            <p class="mb-4">
+              Your balance is: $<span id="betInputBalanceSpan"></span>
+            </p>
+
+            <button
+              class="btn btn-success w-100 text-uppercase"
+              id="btnTakeBet"
+            >
+              next round
+            </button>
+          </div>
         </div>
       </div>
     </div>

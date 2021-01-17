@@ -8,12 +8,16 @@ export class Game {
     menuDiv,
     gameDiv,
     roundResultDiv,
+    endGameDiv,
+    betInputDiv,
     btnHit,
     btnStay,
     btnDoubleDown,
     btnSave,
     btnLoad,
     btnNextRound,
+    btnPlayAgain,
+    btnTakeBet,
     dealersCardsDiv,
     playersCardsDiv,
     balanceSpan,
@@ -22,14 +26,19 @@ export class Game {
     dealersCardsTotalValueSpan,
     playersCardsTotalValueSpan,
     roundResultSpan,
+    endGameBalanceSpan,
+    betInputBalanceSpan,
+    betInput,
     initialBalance,
-    bet = 100,
+    bet = 0,
     round = 0
   ) {
     this.windowDiv = windowDiv;
     this.menuDiv = menuDiv;
     this.gameDiv = gameDiv;
     this.roundResultDiv = roundResultDiv;
+    this.endGameDiv = endGameDiv;
+    this.betInputDiv = betInputDiv;
 
     this.btnHit = btnHit;
     this.btnStay = btnStay;
@@ -37,6 +46,8 @@ export class Game {
     this.btnSave = btnSave;
     this.btnLoad = btnLoad;
     this.btnNextRound = btnNextRound;
+    this.btnPlayAgain = btnPlayAgain;
+    this.btnTakeBet = btnTakeBet;
 
     this.dealersCardsDiv = dealersCardsDiv;
     this.playersCardsDiv = playersCardsDiv;
@@ -48,7 +59,12 @@ export class Game {
     this.playersCardsTotalValueSpan = playersCardsTotalValueSpan;
 
     this.roundResultSpan = roundResultSpan;
+    this.endGameBalanceSpan = endGameBalanceSpan;
+    this.betInputBalanceSpan = betInputBalanceSpan;
 
+    this.betInput = betInput;
+
+    this.initialBalance = initialBalance;
     this.balance = initialBalance;
     this.bet = bet;
     this.round = round;
@@ -59,16 +75,23 @@ export class Game {
     this.dealer = new Player("dealer");
 
     this.deck = new Deck(this);
-    this.startGame(this.screen);
+    this.takeBet();
   }
 
-  startGame = async (screen) => {
+  startGame = async () => {
     await this.deck.getNewDeckId();
     await this.startRound();
-    screen.hideElement(menuDiv);
-    screen.setGameWindowFull(this.windowDiv);
     this.addListeners();
-    screen.showElement(this.gameDiv);
+    this.screen.showElement(this.gameDiv);
+  };
+
+  restartGame = async () => {
+    this.btnPlayAgain.disabled = true;
+    this.round = 0;
+    this.balance = this.initialBalance;
+    await this.deck.shuffle();
+    await this.startRound();
+    this.screen.hideElement(this.endGameDiv);
   };
 
   startRound = async () => {
@@ -80,69 +103,116 @@ export class Game {
     this.balance -= this.bet;
     await this.deck.drawCards(2, this.dealer);
     await this.deck.drawCards(2, this.player);
-    this.screen.hideElement(this.roundResultDiv);
+    this.screen.hideElement(this.betInputDiv);
     this.screen.updateValues(this, this.player, this.dealer);
     this.enableGameButtons();
   };
+
+  takeBet = () => {
+    if (this.round === 5) {
+      this.endGame();
+      return;
+    }
+    this.screen.hideElement(this.menuDiv);
+    this.screen.hideElement(this.roundResultDiv);
+    this.screen.setGameWindowFull(this.windowDiv);
+    this.betInputBalanceSpan.textContent = this.balance;
+    this.betInput.max = this.balance;
+    this.btnTakeBet.addEventListener("click", this.handleTakeBetButton);
+    this.btnTakeBet.disabled = false;
+    this.screen.showElement(this.betInputDiv);
+  }
+
+  handleTakeBetButton = () => {
+    this.btnTakeBet.disabled = true;
+    this.bet = parseInt(this.betInput.value);
+    if (this.bet > this.balance) this.bet = this.balance;
+    if (this.round === 0) {
+      this.startGame();
+    } else {
+      this.startRound();
+    }
+  }
+
+  endGame() {
+    this.btnNextRound.disabled = true;
+    this.disableGameButtons();
+    this.endGameBalanceSpan.textContent = this.balance;
+    this.screen.hideElement(this.roundResultDiv);
+    this.screen.showElement(this.endGameDiv);
+  }
 
   endRound() {
     this.disableGameButtons();
     let msg = "";
     switch (this.checkWinner()) {
-      case 'dealer':
-        msg = 'You lose';
+      case "dealer":
+        msg = "You lose";
         break;
-      case 'draw':
-        msg = 'It\'s a draw';
+      case "draw":
+        msg = "It's a draw";
+        this.balance += this.bet;
         break;
-      case 'player':
-        msg = 'You win';
+      case "player":
+        msg = "You win";
+        this.balance += 1.5 * this.bet;
         break;
     }
+    this.bet = 0;
     this.roundResultSpan.textContent = msg;
-  
     this.screen.showElement(this.roundResultDiv);
-    this.btnNextRound.disabled = false;
   }
 
   checkWinner() {
     if (this.player.hand.length === 5 && this.player.totalCardsValue <= 21) {
-      return 'player';
+      return "player";
     }
-    if (this.player.totalCardsValue > this.dealer.totalCardsValue && this.player.totalCardsValue <= 21) {
-      return 'player';
+    if (
+      this.player.totalCardsValue > this.dealer.totalCardsValue &&
+      this.player.totalCardsValue <= 21
+    ) {
+      return "player";
     }
     if (this.dealer.totalCardsValue > 21 && this.player.totalCardsValue <= 21) {
-      return 'player';
+      return "player";
     }
-    if (this.player.totalCardsValue === this.dealer.totalCardsValue && this.player.totalCardsValue <= 21) {
-      return 'draw';
+    if (
+      this.player.totalCardsValue === this.dealer.totalCardsValue &&
+      this.player.totalCardsValue <= 21
+    ) {
+      return "draw";
     }
-    if (this.dealer.totalCardsValue > this.player.totalCardsValue && this.dealer.totalCardsValue <= 21) {
-      return 'dealer';
+    if (
+      this.dealer.totalCardsValue > this.player.totalCardsValue &&
+      this.dealer.totalCardsValue <= 21
+    ) {
+      return "dealer";
     }
     if (this.player.totalCardsValue > 21 && this.dealer.totalCardsValue <= 21) {
-      return 'dealer';
+      return "dealer";
     }
   }
 
   disableGameButtons() {
     this.btnHit.disabled = true;
     this.btnStay.disabled = true;
-    this.btnDoubleDown.disabled = true;  
+    this.btnDoubleDown.disabled = true;
   }
 
   enableGameButtons() {
     this.btnHit.disabled = false;
     this.btnStay.disabled = false;
     this.btnDoubleDown.disabled = false;
+    this.btnNextRound.disabled = false;
+    this.btnPlayAgain.disabled = false;
   }
 
   addListeners() {
     this.btnHit.addEventListener("click", this.hit);
     this.btnStay.addEventListener("click", this.stay);
     this.btnDoubleDown.addEventListener("click", this.doubleDown);
-    this.btnNextRound.addEventListener("click", this.startRound);
+    this.btnNextRound.addEventListener("click", this.takeBet);
+    this.btnPlayAgain.addEventListener("click", this.restartGame);
   }
 
   // game action funcs:
