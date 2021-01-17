@@ -20,6 +20,10 @@ hr {
     border-color: #fff;
 }
 
+span {
+    color: rgb(92, 255, 86);
+}
+
 .btn:focus {
     box-shadow: none;
   }
@@ -28,7 +32,19 @@ hr {
     height: 100vh;
 }
 
+.roundResult {
+    position: absolute;
+    background-color: rgba(0, 0, 0, .6);
+    width: 320px;
+    padding: 2rem;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -70%);
+    border-radius: 10px;
+}
+
 .window {
+    position: relative;
     background-color: rgba(0, 0, 0, .4);
     border-radius: 10px;
 }

@@ -8,7 +8,7 @@
   </head>
   <body>
     <div
-      class="container d-flex flex-column justify-content-center align-item-center container--main"
+      class="container-xl d-flex flex-column justify-content-center align-item-center container--main"
     >
       <div class="row">
         <div class="col-12 text-center">
@@ -46,13 +46,13 @@
           <div class="d-none flex-column h-100" id="gameDiv">
             <div class="row">
               <div class="col-6">
-                <h2 class="h5 mb-4">Dealer's cards (total value <span id="dealersCardsTotalValueSpan"></span>):</h2>
+                <h2 class="h5 mb-4">Dealer's cards (total value: <span id="dealersCardsTotalValueSpan"></span>):</h2>
               </div>
               <div class="col-2 d-flex justify-content-end">
-                <h2 class="h5 mb-4">Balance: $<span id="balanceSpan">900</span></h2>
+                <h2 class="h5 mb-4">Balance: $<span id="balanceSpan"></span></h2>
               </div>
               <div class="col-2 d-flex justify-content-end">
-                <h2 class="h5 mb-4">Bet: $<span id="betSpan">100</span></h2>
+                <h2 class="h5 mb-4">Bet: $<span id="betSpan"></span></h2>
               </div>
               <div class="col-2 d-flex justify-content-end">
                 <h2 class="h5 mb-4">Round: <span id="roundSpan"></span>/5</h2>
@@ -68,7 +68,7 @@
 
             <div class="row">
               <div class="col-12">
-                <h2 class="h5 mb-4 mt-4">Your cards (total value <span id="playersCardsTotalValueSpan"></span>):</h2>
+                <h2 class="h5 mb-4 mt-4">Your cards (total value: <span id="playersCardsTotalValueSpan"></span>):</h2>
               </div>
             </div>
 
@@ -81,6 +81,7 @@
 
             <hr class="my-4" />
 
+            <!-- GAME BUTTONS -->
             <div class="row no-gutters">
               <div class="col-2 d-flex justify-content-center">
                 <button
@@ -128,6 +129,23 @@
               </div>
             </div>
           </div>
+
+
+          <!-- ROUND RESULT DIV -->
+          <div id="roundResultDiv" class="d-none flex-column text-center roundResult">
+
+            <h3 class="mb-4"><span id="roundResultSpan"></span></h3>
+
+            <button
+            class="btn btn-success w-100 text-uppercase"
+            id="btnNextRound"
+          >
+            next round
+          </button>
+
+          </div>
+
+
         </div>
       </div>
     </div>

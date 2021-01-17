@@ -18,27 +18,34 @@ export class Screen {
   }
 
   updateValues(game, player, dealer) {
-      this.showCards(game, player);
+    this.showCards(game, player);
+    this.showCards(game, dealer);
+    player.updateTotalCardsValue();
+    dealer.updateTotalCardsValue();
+    game.playersCardsTotalValueSpan.textContent = player.totalCardsValue;
+    game.dealersCardsTotalValueSpan.textContent = dealer.totalCardsValue;
+    game.balanceSpan.textContent = game.balance;
+    game.betSpan.textContent = game.bet;
+    game.roundSpan.textContent = game.round;
   }
 
   showCards(game, player) {
     let div;
     if (player.name === "player") {
-        div = game.playersCardsDiv;
+      div = game.playersCardsDiv;
     }
     if (player.name === "dealer") {
-        div = game.dealersCardsDiv;
+      div = game.dealersCardsDiv;
     }
     div.innerHTML = "";
-    player.hand.map(cardCode => {
-        div.innerHTML += 
-        `<div class="col-2">
+    player.hand.map((cardCode) => {
+      div.innerHTML += `<div class="col-2">
         <img
         src="https://deckofcardsapi.com/static/img/${cardCode}.png"
-        alt=""
+        alt="${cardCode}"
         class="img-fluid"
         />
-        </div>`
-    })
+        </div>`;
+    });
   }
 }
