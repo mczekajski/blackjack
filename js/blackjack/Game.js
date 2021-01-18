@@ -1,9 +1,17 @@
 import { Deck } from "./Deck.js";
 import { Player } from "./Player.js";
 import { Screen } from "./Screen.js";
+import { Saving } from "./Saving.js";
+
+export const GAMESTATE = {
+  BET: 0,
+  PLAY: 1,
+  ROUND_END: 2
+}
 
 export class Game {
   constructor(
+    gameLoaded,
     windowDiv,
     menuDiv,
     gameDiv,
@@ -29,10 +37,14 @@ export class Game {
     endGameBalanceSpan,
     betInputBalanceSpan,
     betInput,
-    initialBalance,
+    showTopScore,
+    initialBalance = 1000,
     bet = 0,
-    round = 0
+    round = 0,
+    deckId = "",
+    gamestate = GAMESTATE.BET
   ) {
+    this.gameLoaded = gameLoaded;
     this.windowDiv = windowDiv;
     this.menuDiv = menuDiv;
     this.gameDiv = gameDiv;
@@ -64,6 +76,8 @@ export class Game {
 
     this.betInput = betInput;
 
+    this.showTopScore = showTopScore;
+
     this.initialBalance = initialBalance;
     this.balance = initialBalance;
     this.bet = bet;
@@ -71,19 +85,22 @@ export class Game {
     this.doubleDownUsed = false;
 
     this.screen = new Screen();
+    this.saving = new Saving();
     this.player = new Player("player");
     this.dealer = new Player("dealer");
 
-    this.deck = new Deck(this);
+    this.gamestate = gamestate;
+
+    this.deck = new Deck(this, deckId);
     this.disableGameButtons();
+    this.addListeners();
     this.screen.showElement(this.gameDiv);
-    this.takeBet();
+    this.gameLoaded ? this.saving.loadGame(this) : this.takeBet();
   }
 
   startGame = async () => {
-    await this.deck.getNewDeckId();
+    if (!this.gameLoaded) await this.deck.getNewDeckId();
     await this.startRound();
-    this.addListeners();
     this.screen.showElement(this.gameDiv);
   };
 
@@ -92,11 +109,12 @@ export class Game {
     this.round = 0;
     this.balance = this.initialBalance;
     await this.deck.shuffle();
-    await this.startRound();
+    this.takeBet();
     this.screen.hideElement(this.endGameDiv);
   };
 
   startRound = async () => {
+    this.gamestate = GAMESTATE.PLAY;
     this.btnNextRound.disabled = true;
     this.doubleDownUsed = false;
     this.player.hand.length = 0;
@@ -112,6 +130,7 @@ export class Game {
   };
 
   takeBet = () => {
+    this.gamestate = GAMESTATE.BET;
     if (this.round === 5 || this.balance < 5) {
       this.endGame();
       return;
@@ -121,17 +140,18 @@ export class Game {
     this.screen.setGameWindowFull(this.windowDiv);
     this.betInputBalanceSpan.textContent = this.balance;
     this.betInput.max = this.balance;
-    this.betInput.addEventListener('change', (e) => this.handleBetInput(e))
+    this.betInput.addEventListener("change", (e) => this.handleBetInput(e));
     this.btnTakeBet.addEventListener("click", this.handleTakeBetButton);
     this.btnTakeBet.disabled = false;
     this.screen.showElement(this.betInputDiv);
-  }
+  };
 
   handleBetInput = (e) => {
     if (e.target.value < 100) e.target.value = 100;
     if (e.target.value > this.balance) e.target.value = this.balance;
-    if (e.target.value % 10 !== 0) e.target.value = e.target.value - e.target.value % 10;
-  }
+    if (e.target.value % 10 !== 0)
+      e.target.value = e.target.value - (e.target.value % 10);
+  };
 
   handleTakeBetButton = () => {
     this.btnTakeBet.disabled = true;
@@ -142,7 +162,7 @@ export class Game {
     } else {
       this.startRound();
     }
-  }
+  };
 
   endGame() {
     this.btnNextRound.disabled = true;
@@ -153,6 +173,7 @@ export class Game {
   }
 
   endRound() {
+    this.gamestate = GAMESTATE.ROUND_END;
     this.disableGameButtons();
     let msg = "";
     switch (this.checkWinner()) {
@@ -223,6 +244,8 @@ export class Game {
     this.btnDoubleDown.addEventListener("click", this.doubleDown);
     this.btnNextRound.addEventListener("click", this.takeBet);
     this.btnPlayAgain.addEventListener("click", this.restartGame);
+    this.btnSave.addEventListener("click", () => this.saving.saveGame(this));
+    this.btnLoad.addEventListener("click", () => this.saving.loadGame(this));
   }
 
   // game action funcs:

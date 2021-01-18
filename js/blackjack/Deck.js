@@ -1,7 +1,7 @@
 export class Deck {
-  constructor(game) {
+  constructor(game, id = "") {
     this.game = game;
-    this.id = "";
+    this.id = id;
   }
 
   getNewDeckId = async () => {

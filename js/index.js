@@ -35,9 +35,39 @@ const betInputBalanceSpan = document.getElementById("betInputBalanceSpan");
 
 const betInput = document.getElementById("betInput");
 
+let gameLoaded = false;
+
+const loadGame = () => {
+  gameLoaded = true;
+  createGame();
+}
+
+const showTopScore = () => {
+  console.log('topscores');
+  localStorage.topScore ? console.log(localStorage.topScore) : console.log('There is no TopScore yet');
+}
+
+const addListeners = () => {
+  btnNewGame.addEventListener('click', createGame);
+  btnLoadGame.addEventListener('click', loadGame);
+  btnTopScore.addEventListener('click', showTopScore);
+}
+
+const disableMenuButtons = () => {
+  btnNewGame.disabled = true;
+  btnLoadGame.disabled = true;
+  btnTopScore.disabled = true;
+}
+
+const disableNonActiveButtons = () => {
+  localStorage.topScore ? btnTopScore.disabled = false : btnTopScore.disabled = true;
+  localStorage.save ? btnLoadGame.disabled = false : btnLoadGame.disabled = true;
+}
+
 const createGame = () => {
-  btnNewGame.classList.disabled = true;
+  disableMenuButtons();
   new Game(
+    gameLoaded,
     windowDiv,
     menuDiv,
     gameDiv,
@@ -63,8 +93,13 @@ const createGame = () => {
     endGameBalanceSpan,
     betInputBalanceSpan,
     betInput,
+    showTopScore,
     1000
   );
 }
 
-btnNewGame.addEventListener('click', createGame);
+disableNonActiveButtons();
+addListeners();
+
+
+
