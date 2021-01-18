@@ -37,7 +37,7 @@ export class Game {
     endGameBalanceSpan,
     betInputBalanceSpan,
     betInput,
-    showTopScore,
+    loadTopResults,
     initialBalance = 1000,
     bet = 0,
     round = 0,
@@ -76,7 +76,7 @@ export class Game {
 
     this.betInput = betInput;
 
-    this.showTopScore = showTopScore;
+    this.loadTopResults = loadTopResults;
 
     this.initialBalance = initialBalance;
     this.balance = initialBalance;
@@ -170,6 +170,7 @@ export class Game {
     this.endGameBalanceSpan.textContent = this.balance;
     this.screen.hideElement(this.roundResultDiv);
     this.screen.showElement(this.endGameDiv);
+    this.saving.saveResult(this.balance);
   }
 
   endRound() {
