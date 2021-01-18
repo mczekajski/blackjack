@@ -21,6 +21,7 @@ export class Game {
     btnHit,
     btnStay,
     btnDoubleDown,
+    btnTopResults,
     btnSave,
     btnLoad,
     btnNextRound,
@@ -55,6 +56,7 @@ export class Game {
     this.btnHit = btnHit;
     this.btnStay = btnStay;
     this.btnDoubleDown = btnDoubleDown;
+    this.btnTopResults = btnTopResults;
     this.btnSave = btnSave;
     this.btnLoad = btnLoad;
     this.btnNextRound = btnNextRound;
@@ -243,6 +245,7 @@ export class Game {
     this.btnHit.addEventListener("click", this.hit);
     this.btnStay.addEventListener("click", this.stay);
     this.btnDoubleDown.addEventListener("click", this.doubleDown);
+    this.btnTopResults.addEventListener("click", this.loadTopResults)
     this.btnNextRound.addEventListener("click", this.takeBet);
     this.btnPlayAgain.addEventListener("click", this.restartGame);
     this.btnSave.addEventListener("click", () => this.saving.saveGame(this));

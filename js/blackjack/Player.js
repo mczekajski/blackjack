@@ -10,6 +10,7 @@ export class Player {
     }
 
     countTotalCardsValue() {
+        if (this.hand.length === 0) return 0;
         if (this.hand.filter(card => card[0] === 'A').length === 2 && this.hand.length === 2) {
             return 21;
         }

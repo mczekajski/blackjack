@@ -14,6 +14,7 @@ const betInputDiv = document.getElementById("betInputDiv");
 const btnHit = document.getElementById("btnHit");
 const btnStay = document.getElementById("btnStay");
 const btnDoubleDown = document.getElementById("btnDoubleDown");
+const btnTopResults = document.getElementById("btnTopResults");
 const btnSave = document.getElementById("btnSave");
 const btnLoad = document.getElementById("btnLoad");
 const btnNextRound = document.getElementById("btnNextRound");
@@ -88,6 +89,7 @@ const createGame = () => {
     btnHit,
     btnStay,
     btnDoubleDown,
+    btnTopResults,
     btnSave,
     btnLoad,
     btnNextRound,
