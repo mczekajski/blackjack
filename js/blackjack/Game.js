@@ -108,6 +108,7 @@ export class Game {
     this.screen.hideElement(this.betInputDiv);
     this.screen.updateValues(this, this.player, this.dealer);
     this.enableGameButtons();
+    if (this.balance < this.bet) this.btnDoubleDown.disabled = true;
   };
 
   takeBet = () => {
@@ -120,9 +121,16 @@ export class Game {
     this.screen.setGameWindowFull(this.windowDiv);
     this.betInputBalanceSpan.textContent = this.balance;
     this.betInput.max = this.balance;
+    this.betInput.addEventListener('change', (e) => this.handleBetInput(e))
     this.btnTakeBet.addEventListener("click", this.handleTakeBetButton);
     this.btnTakeBet.disabled = false;
     this.screen.showElement(this.betInputDiv);
+  }
+
+  handleBetInput = (e) => {
+    if (e.target.value < 100) e.target.value = 100;
+    if (e.target.value > this.balance) e.target.value = this.balance;
+    if (e.target.value % 10 !== 0) e.target.value = e.target.value - e.target.value % 10;
   }
 
   handleTakeBetButton = () => {
