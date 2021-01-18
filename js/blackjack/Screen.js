@@ -39,13 +39,24 @@ export class Screen {
     }
     div.innerHTML = "";
     player.hand.map((cardCode) => {
-      div.innerHTML += `<div class="col-2">
+      if (cardCode === "AD") {
+        div.innerHTML += `<div class="col-2">
         <img
-        src="https://deckofcardsapi.com/static/img/${cardCode}.png"
-        alt="${cardCode}"
+        src="https://deckofcardsapi.com/static/img/aceDiamonds.png"
+        alt="Ace Diamonds Card"
         class="img-fluid"
         />
         </div>`;
+      } 
+      else {
+        div.innerHTML += `<div class="col-2">
+        <img
+        src="https://deckofcardsapi.com/static/img/${cardCode}.png"
+        alt="${cardCode} Card"
+        class="img-fluid"
+        />
+        </div>`;
+      }
     });
   }
 }
