@@ -17,6 +17,8 @@ const btnDoubleDown = document.getElementById("btnDoubleDown");
 const btnTopResults = document.getElementById("btnTopResults");
 const btnSave = document.getElementById("btnSave");
 const btnLoad = document.getElementById("btnLoad");
+const btnHistory = document.getElementById("btnHistory");
+const btnReset = document.getElementById("btnReset");
 const btnNextRound = document.getElementById("btnNextRound");
 const btnPlayAgain = document.getElementById("btnPlayAgain");
 const btnTakeBet = document.getElementById("btnTakeBet");
@@ -35,7 +37,6 @@ const endGameBalanceSpan = document.getElementById("endGameBalanceSpan");
 const betInputBalanceSpan = document.getElementById("betInputBalanceSpan");
 
 const betInput = document.getElementById("betInput");
-
 const topResultsDiv = document.getElementById("topResults");
 
 let gameLoaded = false;
@@ -92,6 +93,8 @@ const createGame = () => {
     btnTopResults,
     btnSave,
     btnLoad,
+    btnHistory,
+    btnReset,
     btnNextRound,
     btnPlayAgain,
     btnTakeBet,

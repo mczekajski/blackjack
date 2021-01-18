@@ -31,7 +31,7 @@ export class Saving {
         gamestate: game.gamestate,
       })
     );
-    console.log("I saved: \n" + localStorage.save);
+    game.btnLoad.disabled = false;
   };
 
   loadGame = (game) => {
@@ -94,5 +94,9 @@ export class Saving {
   getSaveDate() {
     const d = new Date();
     return d.toLocaleString();
+  }
+
+  loadHistory = () => {
+      console.log("loading game history");
   }
 }

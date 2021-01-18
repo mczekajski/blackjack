@@ -24,6 +24,8 @@ export class Game {
     btnTopResults,
     btnSave,
     btnLoad,
+    btnHistory,
+    btnReset,
     btnNextRound,
     btnPlayAgain,
     btnTakeBet,
@@ -59,6 +61,8 @@ export class Game {
     this.btnTopResults = btnTopResults;
     this.btnSave = btnSave;
     this.btnLoad = btnLoad;
+    this.btnHistory = btnHistory;
+    this.btnReset = btnReset;
     this.btnNextRound = btnNextRound;
     this.btnPlayAgain = btnPlayAgain;
     this.btnTakeBet = btnTakeBet;
@@ -110,9 +114,13 @@ export class Game {
     this.btnPlayAgain.disabled = true;
     this.round = 0;
     this.balance = this.initialBalance;
+    this.player.hand.length = 0;
+    this.dealer.hand.length = 0;
+    this.screen.updateValues(this, this.player, this.dealer);
     await this.deck.shuffle();
     this.takeBet();
     this.screen.hideElement(this.endGameDiv);
+    this.screen.hideElement(this.roundResultDiv);
   };
 
   startRound = async () => {
@@ -231,6 +239,8 @@ export class Game {
     this.btnHit.disabled = true;
     this.btnStay.disabled = true;
     this.btnDoubleDown.disabled = true;
+    localStorage.topScore ? this.btnTopResults.disabled = false : this.btnTopResults.disabled = true;
+    localStorage.save ? this.btnLoad.disabled = false : btnLoad.disabled = true;
   }
 
   enableGameButtons() {
@@ -239,6 +249,8 @@ export class Game {
     this.btnDoubleDown.disabled = false;
     this.btnNextRound.disabled = false;
     this.btnPlayAgain.disabled = false;
+    this.btnHistory.disabled = false;
+    this.btnReset.disabled = false;
   }
 
   addListeners() {
@@ -250,6 +262,8 @@ export class Game {
     this.btnPlayAgain.addEventListener("click", this.restartGame);
     this.btnSave.addEventListener("click", () => this.saving.saveGame(this));
     this.btnLoad.addEventListener("click", () => this.saving.loadGame(this));
+    this.btnHistory.addEventListener("click", this.saving.loadHistory);
+    this.btnReset.addEventListener("click", this.restartGame);
   }
 
   // game action funcs:

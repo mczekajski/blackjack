@@ -38,25 +38,41 @@ export class Screen {
       div = game.dealersCardsDiv;
     }
     div.innerHTML = "";
-    player.hand.map((cardCode) => {
-      if (cardCode === "AD") {
-        div.innerHTML += `<div class="col-2">
+    if (game.player.hand.length === 0) {
+      div.innerHTML += `<div class="col-2">
+      <img
+        src="./img/placeholder.png"
+        alt="Card placeholder"
+        class="img-fluid"
+      />
+    </div>
+    <div class="col-2">
+      <img
+        src="./img/placeholder.png"
+        alt="Card placeholder"
+        class="img-fluid"
+      />
+    </div>`;
+    } else {
+      player.hand.map((cardCode) => {
+        if (cardCode === "AD") {
+          div.innerHTML += `<div class="col-2">
         <img
         src="https://deckofcardsapi.com/static/img/aceDiamonds.png"
         alt="Ace Diamonds Card"
         class="img-fluid"
         />
         </div>`;
-      } 
-      else {
-        div.innerHTML += `<div class="col-2">
+        } else {
+          div.innerHTML += `<div class="col-2">
         <img
         src="https://deckofcardsapi.com/static/img/${cardCode}.png"
         alt="${cardCode} Card"
         class="img-fluid"
         />
         </div>`;
-      }
-    });
+        }
+      });
+    }
   }
 }
