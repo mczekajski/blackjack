@@ -2,6 +2,9 @@
 
 My implementation of a BlackJack game written in JavaScript. 
 
+## Live demo
+https://mczekajski.github.io/blackjack/
+
 ## Menu
 Initial menu consists of 3 buttons:
 1. Start new game.
