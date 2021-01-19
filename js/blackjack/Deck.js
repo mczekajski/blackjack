@@ -10,7 +10,7 @@ export class Deck {
     )
       .then((res) => res.json())
       .then((data) => (this.id = data.deck_id))
-      .catch(() => this.getNewDeckId());
+      .catch(() => this.getNewDeckId);
   };
 
   drawCards = async (cardsNumber, player) => {

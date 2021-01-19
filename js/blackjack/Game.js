@@ -3,6 +3,7 @@ import { Player } from "./Player.js";
 import { Screen } from "./Screen.js";
 import { Saving } from "./Saving.js";
 import { History } from "./History.js";
+import { Action } from "./Action.js";
 
 export const GAMESTATE = {
   BET: 0,
@@ -98,6 +99,7 @@ export class Game {
     this.player = new Player("player");
     this.dealer = new Player("dealer");
     this.history = new History(this);
+    this.action = new Action(this);
 
     this.gamestate = gamestate;
 
@@ -263,9 +265,9 @@ export class Game {
   }
 
   addListeners = () => {
-    this.btnHit.addEventListener("click", this.hit);
-    this.btnStay.addEventListener("click", this.stay);
-    this.btnDoubleDown.addEventListener("click", this.doubleDown);
+    this.btnHit.addEventListener("click", this.action.hit);
+    this.btnStay.addEventListener("click", this.action.stay);
+    this.btnDoubleDown.addEventListener("click", this.action.doubleDown);
     this.btnTopResults.addEventListener("click", this.loadTopResults)
     this.btnNextRound.addEventListener("click", this.takeBet);
     this.btnPlayAgain.addEventListener("click", this.restartGame);
@@ -274,38 +276,4 @@ export class Game {
     this.btnHistory.addEventListener("click", this.history.showHistory);
     this.btnReset.addEventListener("click", this.restartGame);
   }
-
-  // game action funcs:
-  hit = async () => {
-    if (this.doubleDownUsed) {
-      this.btnHit.disabled = true;
-    }
-    this.btnDoubleDown.disabled = true;
-    await this.deck.drawCards(1, this.player);
-    this.screen.updateValues(this, this.player, this.dealer);
-    if (this.player.totalCardsValue >= 21 || this.player.hand.length === 5)
-      this.endRound();
-  };
-
-  stay = async () => {
-    if (this.dealer.totalCardsValue < 17) {
-      await this.deck.drawCards(1, this.dealer);
-      this.screen.updateValues(this, this.player, this.dealer);
-      if (this.dealer.totalCardsValue < 17) {
-        setTimeout(this.stay, 500);
-      } else {
-        this.endRound();
-      }
-    } else {
-      this.endRound();
-    }
-  };
-
-  doubleDown = () => {
-    this.doubleDownUsed = true;
-    this.btnDoubleDown.disabled = true;
-    this.balance -= this.bet;
-    this.bet += this.bet;
-    this.screen.updateValues(this, this.player, this.dealer);
-  };
 }
