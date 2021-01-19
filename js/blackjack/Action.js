@@ -14,11 +14,12 @@ export class Action {
   };
 
   stay = async () => {
+    this.game.btnDoubleDown.disabled = true;
     if (this.game.dealer.totalCardsValue < 17) {
       await this.game.deck.drawCards(1, this.game.dealer);
       this.game.screen.updateValues(this.game, this.game.player, this.game.dealer);
       if (this.game.dealer.totalCardsValue < 17) {
-        setTimeout(this.game.stay, 500);
+        setTimeout(this.game.action.stay, 500);
       } else {
         this.game.endRound();
       }

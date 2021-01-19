@@ -8,8 +8,8 @@ import { Action } from "./Action.js";
 export const GAMESTATE = {
   BET: 0,
   PLAY: 1,
-  ROUND_END: 2
-}
+  ROUND_END: 2,
+};
 
 export class Game {
   constructor(
@@ -189,8 +189,10 @@ export class Game {
     this.screen.hideElement(this.roundResultDiv);
     this.screen.showElement(this.endGameDiv);
     this.saving.saveResult(this.balance);
-    setTimeout(() => {this.btnPlayAgain.disabled = false}, 2000)
-  }
+    setTimeout(() => {
+      this.btnPlayAgain.disabled = false;
+    }, 2000);
+  };
 
   endRound = () => {
     this.gamestate = GAMESTATE.ROUND_END;
@@ -213,7 +215,7 @@ export class Game {
     this.roundResultSpan.textContent = msg;
     this.history.addRoundToHistory();
     this.screen.showElement(this.roundResultDiv);
-  }
+  };
 
   checkWinner = () => {
     if (this.player.hand.length === 5 && this.player.totalCardsValue <= 21) {
@@ -243,16 +245,20 @@ export class Game {
     if (this.player.totalCardsValue > 21 && this.dealer.totalCardsValue <= 21) {
       return "dealer";
     }
-  }
+  };
 
   disableGameButtons = () => {
     this.btnHit.disabled = true;
     this.btnStay.disabled = true;
     this.btnDoubleDown.disabled = true;
     this.btnPlayAgain.disabled = true;
-    localStorage.topScore ? this.btnTopResults.disabled = false : this.btnTopResults.disabled = true;
-    localStorage.save ? this.btnLoad.disabled = false : btnLoad.disabled = true;
-  }
+    localStorage.topScore
+      ? (this.btnTopResults.disabled = false)
+      : (this.btnTopResults.disabled = true);
+    localStorage.save
+      ? (this.btnLoad.disabled = false)
+      : (btnLoad.disabled = true);
+  };
 
   enableGameButtons = () => {
     this.btnHit.disabled = false;
@@ -262,18 +268,22 @@ export class Game {
     this.btnPlayAgain.disabled = false;
     this.btnHistory.disabled = false;
     this.btnReset.disabled = false;
-  }
+  };
 
   addListeners = () => {
     this.btnHit.addEventListener("click", this.action.hit);
     this.btnStay.addEventListener("click", this.action.stay);
     this.btnDoubleDown.addEventListener("click", this.action.doubleDown);
-    this.btnTopResults.addEventListener("click", this.loadTopResults)
+    this.btnTopResults.addEventListener("click", this.loadTopResults);
     this.btnNextRound.addEventListener("click", this.takeBet);
     this.btnPlayAgain.addEventListener("click", this.restartGame);
     this.btnSave.addEventListener("click", () => this.saving.saveGame(this));
     this.btnLoad.addEventListener("click", () => this.saving.loadGame(this));
     this.btnHistory.addEventListener("click", this.history.showHistory);
     this.btnReset.addEventListener("click", this.restartGame);
-  }
+    window.onbeforeunload = () => {
+      this.saving.saveGame(this);
+      return "You game has been saved.";
+    };
+  };
 }
