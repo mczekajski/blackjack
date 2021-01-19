@@ -38,6 +38,7 @@ const betInputBalanceSpan = document.getElementById("betInputBalanceSpan");
 
 const betInput = document.getElementById("betInput");
 const topResultsDiv = document.getElementById("topResults");
+const gameHistoryDiv = document.getElementById("gameHistory");
 
 let gameLoaded = false;
 
@@ -109,6 +110,7 @@ const createGame = () => {
     endGameBalanceSpan,
     betInputBalanceSpan,
     betInput,
+    gameHistoryDiv,
     loadTopResults,
     1000
   );

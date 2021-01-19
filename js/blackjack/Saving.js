@@ -27,8 +27,9 @@ export class Saving {
             disabled: game.btnDoubleDown.disabled,
           },
         },
-        deckId: game.deck.deckId,
+        deckId: game.deck.id,
         gamestate: game.gamestate,
+        history: game.history.history
       })
     );
     game.btnLoad.disabled = false;
@@ -47,6 +48,7 @@ export class Saving {
       buttons,
       deckId,
       gamestate,
+      history
     } = save;
     game.balance = balance;
     game.round = round;
@@ -58,6 +60,7 @@ export class Saving {
     game.btnDoubleDown.disabled = buttons.doubleDown.disabled;
     game.deck.deckId = deckId;
     game.gamestate = gamestate;
+    game.history.history = history;
     switch (gamestate) {
       case GAMESTATE.BET:
         game.screen.updateValues(game, game.player, game.dealer);
@@ -94,9 +97,5 @@ export class Saving {
   getSaveDate() {
     const d = new Date();
     return d.toLocaleString();
-  }
-
-  loadHistory = () => {
-      console.log("loading game history");
   }
 }

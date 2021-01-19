@@ -2,6 +2,7 @@ import { Deck } from "./Deck.js";
 import { Player } from "./Player.js";
 import { Screen } from "./Screen.js";
 import { Saving } from "./Saving.js";
+import { History } from "./History.js";
 
 export const GAMESTATE = {
   BET: 0,
@@ -40,6 +41,7 @@ export class Game {
     endGameBalanceSpan,
     betInputBalanceSpan,
     betInput,
+    gameHistoryDiv,
     loadTopResults,
     initialBalance = 1000,
     bet = 0,
@@ -81,6 +83,7 @@ export class Game {
     this.betInputBalanceSpan = betInputBalanceSpan;
 
     this.betInput = betInput;
+    this.gameHistoryDiv = gameHistoryDiv;
 
     this.loadTopResults = loadTopResults;
 
@@ -94,6 +97,7 @@ export class Game {
     this.saving = new Saving();
     this.player = new Player("player");
     this.dealer = new Player("dealer");
+    this.history = new History(this);
 
     this.gamestate = gamestate;
 
@@ -106,6 +110,7 @@ export class Game {
 
   startGame = async () => {
     if (!this.gameLoaded) await this.deck.getNewDeckId();
+    if (!this.gameLoaded) this.history.clearHistory();
     await this.startRound();
     this.screen.showElement(this.gameDiv);
   };
@@ -117,6 +122,7 @@ export class Game {
     this.player.hand.length = 0;
     this.dealer.hand.length = 0;
     this.screen.updateValues(this, this.player, this.dealer);
+    this.history.clearHistory();
     await this.deck.shuffle();
     this.takeBet();
     this.screen.hideElement(this.endGameDiv);
@@ -174,7 +180,7 @@ export class Game {
     }
   };
 
-  endGame() {
+  endGame = () => {
     this.btnNextRound.disabled = true;
     this.disableGameButtons();
     this.endGameBalanceSpan.textContent = this.balance;
@@ -183,7 +189,7 @@ export class Game {
     this.saving.saveResult(this.balance);
   }
 
-  endRound() {
+  endRound = () => {
     this.gamestate = GAMESTATE.ROUND_END;
     this.disableGameButtons();
     let msg = "";
@@ -202,10 +208,11 @@ export class Game {
     }
     this.bet = 0;
     this.roundResultSpan.textContent = msg;
+    this.history.addRoundToHistory();
     this.screen.showElement(this.roundResultDiv);
   }
 
-  checkWinner() {
+  checkWinner = () => {
     if (this.player.hand.length === 5 && this.player.totalCardsValue <= 21) {
       return "player";
     }
@@ -235,7 +242,7 @@ export class Game {
     }
   }
 
-  disableGameButtons() {
+  disableGameButtons = () => {
     this.btnHit.disabled = true;
     this.btnStay.disabled = true;
     this.btnDoubleDown.disabled = true;
@@ -243,7 +250,7 @@ export class Game {
     localStorage.save ? this.btnLoad.disabled = false : btnLoad.disabled = true;
   }
 
-  enableGameButtons() {
+  enableGameButtons = () => {
     this.btnHit.disabled = false;
     this.btnStay.disabled = false;
     this.btnDoubleDown.disabled = false;
@@ -253,7 +260,7 @@ export class Game {
     this.btnReset.disabled = false;
   }
 
-  addListeners() {
+  addListeners = () => {
     this.btnHit.addEventListener("click", this.hit);
     this.btnStay.addEventListener("click", this.stay);
     this.btnDoubleDown.addEventListener("click", this.doubleDown);
@@ -262,7 +269,7 @@ export class Game {
     this.btnPlayAgain.addEventListener("click", this.restartGame);
     this.btnSave.addEventListener("click", () => this.saving.saveGame(this));
     this.btnLoad.addEventListener("click", () => this.saving.loadGame(this));
-    this.btnHistory.addEventListener("click", this.saving.loadHistory);
+    this.btnHistory.addEventListener("click", this.history.showHistory);
     this.btnReset.addEventListener("click", this.restartGame);
   }
 
