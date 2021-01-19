@@ -187,6 +187,7 @@ export class Game {
     this.screen.hideElement(this.roundResultDiv);
     this.screen.showElement(this.endGameDiv);
     this.saving.saveResult(this.balance);
+    setTimeout(() => {this.btnPlayAgain.disabled = false}, 2000)
   }
 
   endRound = () => {
@@ -246,6 +247,7 @@ export class Game {
     this.btnHit.disabled = true;
     this.btnStay.disabled = true;
     this.btnDoubleDown.disabled = true;
+    this.btnPlayAgain.disabled = true;
     localStorage.topScore ? this.btnTopResults.disabled = false : this.btnTopResults.disabled = true;
     localStorage.save ? this.btnLoad.disabled = false : btnLoad.disabled = true;
   }
