@@ -58,7 +58,7 @@ export class Saving {
     game.btnHit.disabled = buttons.hit.disabled;
     game.btnStay.disabled = buttons.stay.disabled;
     game.btnDoubleDown.disabled = buttons.doubleDown.disabled;
-    game.deck.deckId = deckId;
+    game.deck.id = deckId;
     game.gamestate = gamestate;
     game.history.history = history;
     switch (gamestate) {
