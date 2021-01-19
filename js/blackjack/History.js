@@ -17,7 +17,6 @@ export class History {
     showHistory = () => {
         let roundHistoryHTML = "";
         this.history.map(round => {
-            console.log(round);
             roundHistoryHTML = roundHistoryHTML + `
             <h5>Round: ${round.round}</h5>
             <p class="mb-1">Winner: <span style="text-transform: capitalize">${round.winner}</span></p>

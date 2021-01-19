@@ -149,7 +149,7 @@ export class Game {
 
   takeBet = () => {
     this.gamestate = GAMESTATE.BET;
-    if (this.round === 5 || this.balance < 5) {
+    if (this.round === 5 || this.balance < 100) {
       this.endGame();
       return;
     }
