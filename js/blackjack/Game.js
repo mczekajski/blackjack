@@ -192,6 +192,7 @@ export class Game {
     setTimeout(() => {
       this.btnPlayAgain.disabled = false;
     }, 2000);
+    this.btnTopResults.disabled = false;
   };
 
   endRound = () => {
