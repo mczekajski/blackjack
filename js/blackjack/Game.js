@@ -278,7 +278,7 @@ export class Game {
     this.btnNextRound.addEventListener("click", this.takeBet);
     this.btnPlayAgain.addEventListener("click", this.restartGame);
     this.btnSave.addEventListener("click", () => this.saving.saveGame(this));
-    this.btnLoad.addEventListener("click", () => this.saving.loadGame(this));
+    this.btnLoad.addEventListener("click", () => {this.saving.loadGame(this), console.log(this.deck.id)});
     this.btnHistory.addEventListener("click", this.history.showHistory);
     this.btnReset.addEventListener("click", this.restartGame);
     window.onbeforeunload = () => {
