@@ -52,3 +52,19 @@ span {
     background-color: rgba(0, 0, 0, .4);
     border-radius: 10px;
 }
+
+@media (max-width: 1366px) {
+    .container--main {
+        max-width: 850px;
+        font-size: 10px;
+    }
+    html {
+        font-size: 14px;
+    }
+    input {
+        font-size: 16px;
+    }
+    p {
+        font-size: 14px;
+    }
+}

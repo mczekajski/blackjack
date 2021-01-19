@@ -133,22 +133,23 @@
           <!-- GAME DIV -->
           <div class="d-none flex-column h-100" id="gameDiv">
             <div class="row">
-              <div class="col-6">
+              <div class="d-flex col-12">
                 <h2 class="h5 mb-4">
                   Dealer's cards (total value:
                   <span id="dealersCardsTotalValueSpan">0</span>):
                 </h2>
-              </div>
-              <div class="col-2 d-flex justify-content-end">
-                <h2 class="h5 mb-4">
-                  Balance: $<span id="balanceSpan">1000</span>
-                </h2>
-              </div>
-              <div class="col-2 d-flex justify-content-end">
-                <h2 class="h5 mb-4">Bet: $<span id="betSpan">0</span></h2>
-              </div>
-              <div class="col-2 d-flex justify-content-end">
-                <h2 class="h5 mb-4">Round: <span id="roundSpan">0</span>/5</h2>
+
+                <div class="d-flex justify-content-between ml-auto">
+                  <h2 class="h5 mb-4 ml-4">
+                    Balance: $<span id="balanceSpan">1000</span>
+                  </h2>
+
+                  <h2 class="h5 mb-4 ml-4">Bet: $<span id="betSpan">0</span></h2>
+
+                  <h2 class="h5 mb-4 ml-4">
+                    Round: <span id="roundSpan">0</span>/5
+                  </h2>
+                </div>
               </div>
             </div>
 
@@ -302,10 +303,7 @@
               Your result is: $<span id="endGameBalanceSpan"></span>
             </p>
 
-            <button
-              class="btn btn-info w-100 text-uppercase"
-              id="btnPlayAgain"
-            >
+            <button class="btn btn-info w-100 text-uppercase" id="btnPlayAgain">
               play again
             </button>
           </div>
